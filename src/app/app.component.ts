@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,15 @@ import { Component } from '@angular/core';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'EjericicioSithec';
+
+  constructor(
+    private modalService: NgbModal
+) {
+    
+}
+
+altaInstructor(contentModal) {
+  this.modalService.open(contentModal, { backdrop: 'static' });
+}
+
 }
