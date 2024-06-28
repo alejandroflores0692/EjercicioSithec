@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { PokemonService } from '../../services/pokemon.service';
 import { switchMap } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import {MediaMatcher} from '@angular/cdk/layout';
 
 @Component({
   selector: 'pokemon-list',
@@ -14,14 +14,15 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './pokemon-list.component.css'
 })
 export class PokemonListComponent implements OnInit {
-
+  
+  mobileQuery: MediaQueryList;
+  private queryListener: () => void;
 
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
-    @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
 
-    public displayedColumns: string[] = ['name'];
-    public dataSource: MatTableDataSource<Object>;
-
+  displayedColumns: string[] = ['name'];
+  dataSource: MatTableDataSource<Object>;
   limit;
   abilities = '';
   types = '';
@@ -30,8 +31,13 @@ export class PokemonListComponent implements OnInit {
 
   constructor(
     private pokeService: PokemonService,
-    private router: Router
+    private router: Router,
+    changeDetector: ChangeDetectorRef, media: MediaMatcher
   ) {
+    this.mobileQuery = media.matchMedia("(max-width: 600px)");
+    console.log("mobile: ", this.mobileQuery.matches);
+    this.queryListener = () => changeDetector.detectChanges();
+    this.mobileQuery.addEventListener('change', this.queryListener);
   }
 
   ngOnInit(): void {
@@ -85,7 +91,7 @@ export class PokemonListComponent implements OnInit {
           gif: res.sprites.other.showdown.front_default,
           exp: res.base_experience,
           abilities: this.abilities,
-          types: this.types,
+          type: this.types,
           stats: {
             hp: res.stats[0].base_stat,
             attack: res.stats[1].base_stat,
@@ -114,7 +120,7 @@ interface pokemonData {
   gif: string;
   exp: number;
   abilities: string;
-  types: string;
+  type: string;
   stats: {
     hp: number;
     attack: number;

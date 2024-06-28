@@ -1,2 +1,84 @@
-<button (click)="back()">back</button>
-<img src="{{ pokemonInfo.image }}" width="250px" alt="">
+<div class="border rounded-4 container shadow-lg mt-4 py-3 px-3 text-dark bg-white" [class.desktopDetail]="!mobileQuery.matches" [class.mobileDetail]="mobileQuery.matches">
+    <div class="mt-1 ms-1 cursor-pointer" (click)="back()">
+        <i class="fa-solid fa-chevron-left text-secondary"></i>&nbsp;
+        <span class="text-secondary"> Pokemon list</span>
+    </div>
+
+    <mat-card class="rounded-4 border border-0 shadow-none">
+        <mat-card-header class="w-100 text-center">
+            <mat-card-title style="font-size: 28px;" class="text-center">
+                <span class="text-capitalize text-center">#{{ pokemonInfo.id }} {{ pokemonInfo.name }}</span>
+            </mat-card-title>
+        </mat-card-header>
+        <img mat-card-image src="{{ pokemonInfo.image }}" class="mb-3">
+        <mat-card-content>
+            <div class="text-center mb-2">
+                <button class="rounded-4 bg-warning" mat-raised-button (click)="stats(contentStats)">
+                    <i class="fa-solid fa-chart-line"></i> Stats
+                </button>
+            </div>
+            <div><strong>Experience: </strong>{{ pokemonInfo.exp }}</div>      
+            <div><strong>Height: </strong>{{ pokemonInfo.height }}'</div>
+            <div><strong>Weight: </strong>{{ pokemonInfo.weight }}</div>            
+            <div><strong>Abilities: </strong>{{ pokemonInfo.abilities }}</div>
+            <div><strong>Type: </strong>{{ pokemonInfo.type }}</div>
+        </mat-card-content>
+    </mat-card>   
+</div>
+        
+<ng-template #contentStats let-modal>
+    <div class="modal-header" style="background-color: #EE4035; color: white">
+        <h1 class="modal-title mt-1 mb-2 ms-2" ngbAutofocus><i class="fa-solid fa-chart-line"></i> Stats</h1>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body p-4">
+        <div class="row">
+            <div class="col-3 mt-3 mb-1 text-center">
+                <img [src]="pokemonInfo.gif == null ? pokemonInfo.image : pokemonInfo.gif" alt="" class="mb-1 w-100">
+                <p class="text-capitalize" style="font-size: 17px;">{{ pokemonInfo.name }}</p>
+            </div>
+            <div class="col-9 pt-1">
+                <div class="row mb-1">
+                    <div class="col-5">Health points: </div>
+                    <div class="col-7">
+                        <ngb-progressbar class="my-1" [value]="pokemonInfo.stats.hp"/>
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-5">Attack: </div>
+                    <div class="col-7">
+                        <ngb-progressbar class="my-1" [value]="pokemonInfo.stats.attack"/>
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-5">Defense: </div>
+                    <div class="col-7">
+                        <ngb-progressbar class="my-1" [value]="pokemonInfo.stats.defense"/>
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-5">Special attack: </div>
+                    <div class="col-7">
+                        <ngb-progressbar class="my-1" [value]="pokemonInfo.stats.specialAttack "/>
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-5">Special Defense: </div>
+                    <div class="col-7">
+                        <ngb-progressbar class="my-1" [value]="pokemonInfo.stats.specialDefense "/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-5">Speed: </div>
+                    <div class="col-7">
+                        <ngb-progressbar class="my-1" [value]="pokemonInfo.stats.speed"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="rounded-4" mat-raised-button (click)="modal.dismiss('Close click')">Close</button>
+    </div>
+</ng-template>
+

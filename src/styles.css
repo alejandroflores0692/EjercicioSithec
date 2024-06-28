@@ -1,7 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { 
+    margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
+    background-image: url("assets/images/fondo.jpg");
+    padding-top: 35px;
+    /* Para dejar la imagen de fondo centrada, vertical y horizontalmente */
+    background-position: center center;
+    
+    /* Para que la imagen de fondo no se repita */
+    background-repeat: no-repeat;
+    
+    /* La imagen se fija en la ventana de visualización para que la altura de la imagen no supere a la del contenido */
+    background-attachment: fixed;
+    
+    /* La imagen de fondo se reescala automáticamente con el cambio del ancho de ventana del navegador */
+    background-size: cover;
+}
 
 .encabezado{
     font-size: 20px !important;
@@ -10,4 +25,25 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     font-size: 15px;
     padding-left: 1.8rem !important;
     padding-right: 1.8rem !important;
+}
+
+.cursor-pointer:hover {
+    cursor: pointer;
+}
+
+.mobileList {
+    width: 90%;
+    height: 720px;
+}
+.desktopList {
+    width: 50%;
+    height: 610px;
+}
+
+.mobileDetail {
+    width: 70%;
+}
+
+.desktopDetail {
+    width: 20%;
 }

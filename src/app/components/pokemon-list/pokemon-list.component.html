@@ -1,4 +1,4 @@
-<div class="border rounded-4 container shadow-lg" style="width: 50%;">
+<div class="border rounded-4 container shadow-lg bg-white" [class.desktopList]="!mobileQuery.matches" [class.mobileList]="mobileQuery.matches">
     <div class="row mx-auto pt-4">    
         
         <div class="text-end col-4">
@@ -14,20 +14,20 @@
         </div>      
     </div>
 
-<div class="table-responsive" style="height: 440px;" *ngIf="list && list.length > 0">
-    <table mat-table [dataSource]="dataSource" class="text-center" matSort>
+    <div class="table-responsive px-2" style="height: 360px;" *ngIf="list && list.length > 0">
+        <table mat-table [dataSource]="dataSource" class="text-center" matSort>
+            
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef class="encabezado text-center">Name</th>
+                <td mat-cell *matCellDef="let row" class="pl-0" (click)="detail(row)">
+                    <span style="font-size: 20px;" class="text-capitalize text-dark"><i class="fa-regular fa-address-card"></i>&nbsp; {{ row.name }}</span>
+                </td>
+            </ng-container>
         
-        <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef class="encabezado text-center">Name</th>
-            <td mat-cell *matCellDef="let row" class="pl-0" (click)="detail(row)">
-                <span style="font-size: 20px;" class="text-capitalize text-dark"><i class="fa-regular fa-address-card"></i>&nbsp; {{ row.name }}</span>
-            </td>
-        </ng-container>
-    
-        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-</div>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
 
     <mat-paginator class="mb-3" [pageSizeOptions]="[25, 100, 250]" *ngIf="dataSource"></mat-paginator>
 </div>
